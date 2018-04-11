@@ -62,14 +62,6 @@ void Dialog::paintEvent(QPaintEvent *event)
 
 void Dialog::nextAnim()
 {
-/*
-    for(int i = 0; i < i < m_balls.size(); i++){
-        //for(int j = i+1; j < m_balls.size(); j++){
-           // handleBallCollision(m_balls.at(i), m_balls.at(j));
-        //}
-    }
-*/
-    //check collisions with wall
     for(int i = 0; i < m_balls.size(); i++){
         Ball *b = m_balls.at(i);
         for(int j = 0; j < m_balls.size(); j++){
@@ -77,6 +69,7 @@ void Dialog::nextAnim()
                 continue;
             Ball *b2 = m_balls.at(j);
             if(ballCollision(b, b2)){
+                qWarning() << "collision";
                 handleBallCollision(b, b2);
             }
         }
@@ -86,26 +79,19 @@ void Dialog::nextAnim()
         if(isLeftCollision(b) || isRightCollision(b)){
             b->getVelocity().setX(-b->getVelocity().x());
         }
-        b->getPosition().setX(b->getPosition().x() + (b->getVelocity().x()));
-        b->getPosition().setY(b->getPosition().y() + (b->getVelocity().y()));
-    }
-
-    //update position and slow velocity due to friction
-    for(int i = 0; i < m_balls.size(); i++){
-        Ball *b = m_balls.at(i);
-
-
+        b->getPosition().setX(b->getPosition().x() + ((float)32/1000)*(b->getVelocity().x()));
+        b->getPosition().setY(b->getPosition().y() + ((float)32/1000)*(b->getVelocity().y()));
         if(b->getVelocity().x() > 0){
-            b->getVelocity().setX(b->getVelocity().x()-m_table->getFriction());
+            b->getVelocity().setX(b->getVelocity().x() - ((float)32/1000)*m_table->getFriction());
         }
         if(b->getVelocity().x() < 0){
-            b->getVelocity().setX(b->getVelocity().x()+m_table->getFriction());
+            b->getVelocity().setX(b->getVelocity().x() + ((float)32/1000)*m_table->getFriction());
         }
         if(b->getVelocity().y() > 0){
-            b->getVelocity().setY(b->getVelocity().y()-m_table->getFriction());
+            b->getVelocity().setY(b->getVelocity().y() - ((float)32/1000)*m_table->getFriction());
         }
         if(b->getVelocity().y() < 0){
-            b->getVelocity().setY(b->getVelocity().y()+m_table->getFriction());
+            b->getVelocity().setY(b->getVelocity().y() + ((float)3/1000)*m_table->getFriction());
         }
         if(std::abs(b->getVelocity().x()) < 0.1){
             b->getVelocity().setX(0);
@@ -113,13 +99,13 @@ void Dialog::nextAnim()
         if(std::abs(b->getVelocity().y()) < 0.1){
             b->getVelocity().setY(0);
         }
-
     }
+
 }
 
 bool Dialog::ballCollision(Ball *b1, Ball *b2)
 {
-    return ((b1->getPosition().distanceToPoint(b2->getPosition()) <= b1->radius()) || (b1->getPosition().distanceToPoint(b2->getPosition())) <= b2->radius());
+    return (b1->getPosition().distanceToPoint(b2->getPosition()) <= (b1->radius() + b2->radius()));
 }
 
 void Dialog::handleBallCollision(Ball *b1, Ball *b2)
