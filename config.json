@@ -1,0 +1,16 @@
+{
+"table" : {
+ "colour":"green",
+ "size":{
+ "x":600,
+ "y":300
+ },
+ "friction":0.1
+},
+"balls" : [
+ {"colour":"white","position":{"x":50,"y":50},"velocity":{"x":10,"y":1},"mass":1,"radius":10},
+ {"colour":"red","position":{"x":150,"y":60},"velocity":{"x":-10,"y":0},"mass":1,"radius":10},
+ {"colour":"blue","position":{"x":150,"y":40},"velocity":{"x":-10,"y":0},"mass":1,"radius":10},
+ {"colour":"#123456","position":{"x":250,"y":70},"velocity":{"x":-10,"y":0},"mass":5,"radius":20}
+]
+}
