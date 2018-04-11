@@ -33,7 +33,7 @@ Dialog::~Dialog()
 
 void Dialog::init()
 {
-    QFile file("../PoolGame/config.json");
+    QFile file("config.json");
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QString val = file.readAll();
     file.close();
@@ -62,29 +62,39 @@ void Dialog::paintEvent(QPaintEvent *event)
 
 void Dialog::nextAnim()
 {
-
+/*
     for(int i = 0; i < i < m_balls.size(); i++){
-        for(int j = i+1; j < m_balls.size(); j++){
+        //for(int j = i+1; j < m_balls.size(); j++){
            // handleBallCollision(m_balls.at(i), m_balls.at(j));
-        }
+        //}
     }
-
+*/
     //check collisions with wall
     for(int i = 0; i < m_balls.size(); i++){
         Ball *b = m_balls.at(i);
+        for(int j = 0; j < m_balls.size(); j++){
+            if(i == j)
+                continue;
+            Ball *b2 = m_balls.at(j);
+            if(ballCollision(b, b2)){
+                handleBallCollision(b, b2);
+            }
+        }
         if(isTopCollision(b) || isBottomCollision(b)){
             b->getVelocity().setY(-b->getVelocity().y());
         }
         if(isLeftCollision(b) || isRightCollision(b)){
             b->getVelocity().setX(-b->getVelocity().x());
         }
+        b->getPosition().setX(b->getPosition().x() + (b->getVelocity().x()));
+        b->getPosition().setY(b->getPosition().y() + (b->getVelocity().y()));
     }
 
     //update position and slow velocity due to friction
     for(int i = 0; i < m_balls.size(); i++){
         Ball *b = m_balls.at(i);
-        b->getPosition().setX(b->getPosition().x() + b->getVelocity().x());
-        b->getPosition().setY(b->getPosition().y() + b->getVelocity().y());
+
+
         if(b->getVelocity().x() > 0){
             b->getVelocity().setX(b->getVelocity().x()-m_table->getFriction());
         }
@@ -106,7 +116,12 @@ void Dialog::nextAnim()
 
     }
 }
-/*
+
+bool Dialog::ballCollision(Ball *b1, Ball *b2)
+{
+    return ((b1->getPosition().distanceToPoint(b2->getPosition()) <= b1->radius()) || (b1->getPosition().distanceToPoint(b2->getPosition())) <= b2->radius());
+}
+
 void Dialog::handleBallCollision(Ball *b1, Ball *b2)
 {
     //QVector2D is a QT class representing a vector in 2D space,
@@ -161,7 +176,7 @@ void Dialog::handleBallCollision(Ball *b1, Ball *b2)
     b2->getVelocity().setX(b2->getVelocity().x() + deltaVB.x());
     b2->getVelocity().setY(b2->getVelocity().y() + deltaVB.y());
 }
-*/
+
 
 bool Dialog::isTopCollision(Ball *b)
 {

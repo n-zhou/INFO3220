@@ -29,7 +29,8 @@ private:
     void paintEvent(QPaintEvent *event);
     Table *m_table;
     std::vector<Ball*> m_balls;
-    //void handleBallCollision(Ball *b1, Ball *b2);
+    bool ballCollision(Ball *b1, Ball *b2);
+    void handleBallCollision(Ball *b1, Ball *b2);
     bool isCollision(Ball *b);
     bool isTopCollision(Ball *b);
     bool isBottomCollision(Ball *b);
