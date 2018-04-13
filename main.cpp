@@ -1,4 +1,3 @@
-#define CONFIG_FILE "../PoolGame/config.json"
 #include "dialog.h"
 #include <QApplication>
 

@@ -28,7 +28,8 @@ SOURCES += \
         dialog.cpp \
     pooltable.cpp \
     poolball.cpp \
-    concretepoolfactory.cpp
+    concretepoolfactory.cpp \
+    game.cpp
 
 HEADERS += \
         dialog.h \
@@ -37,7 +38,9 @@ HEADERS += \
     table.h \
     ball.h \
     abstractpool.h \
-    concretepoolfactory.h
+    concretepoolfactory.h \
+    builder.h \
+    game.h
 
 FORMS += \
         dialog.ui

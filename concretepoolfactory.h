@@ -14,6 +14,11 @@ class ConcretePoolFactory : public AbstractPool
 {
 public:
     ConcretePoolFactory();
+
+    /**
+    * takes in the json object of the whole json file
+    * it must initialize the member variables table and balls accordingly
+    */
     ConcretePoolFactory(QJsonObject json);
     ~ConcretePoolFactory();
 

@@ -18,6 +18,12 @@ public:
 
     ~PoolBall();
 
+    /**
+     * @brief render is implemented in order to inherit the
+     * Ball class.
+     * @param painter
+     * @param time
+     */
     void render(QPainter &painter, unsigned int time);
 
 private:

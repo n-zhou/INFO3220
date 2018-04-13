@@ -8,6 +8,7 @@ ConcretePoolFactory::ConcretePoolFactory():AbstractPool()
 
 }
 
+//constructor takes
 ConcretePoolFactory::ConcretePoolFactory(QJsonObject json):
     AbstractPool(),
     table(json["table"].toObject()),
@@ -21,6 +22,7 @@ ConcretePoolFactory::~ConcretePoolFactory()
 
 }
 
+//returns a pointer to the table created from the config file
 Table* ConcretePoolFactory::createTable()
 {
 
@@ -30,6 +32,7 @@ Table* ConcretePoolFactory::createTable()
             table["friction"].toDouble());
 }
 
+//returns a vector containing all the balls in the provided config file
 std::vector<Ball*> ConcretePoolFactory::createBalls()
 {
     std::vector<Ball*> ret;
@@ -39,7 +42,6 @@ std::vector<Ball*> ConcretePoolFactory::createBalls()
         QJsonObject velocity = ball["velocity"].toObject();
         ret.push_back(new PoolBall(ball["colour"].toString(), position["x"].toDouble(), position["y"].toDouble(), velocity["x"].toDouble(), velocity["y"].toDouble(),
                 ball["mass"].toDouble(), ball["radius"].toDouble()));
-        qDebug() << ret.at(i)->getPosition();
     }
     return ret;
 }

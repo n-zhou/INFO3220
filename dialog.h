@@ -8,6 +8,7 @@
 //#include "config.h"
 #include "concretepoolfactory.h"
 #include <vector>
+#define CONFIG_FILE "../PoolGame/config.json"
 
 namespace Ui {
 class Dialog;
@@ -38,7 +39,16 @@ private:
     bool isRightCollision(Ball *b);
 
 public slots:
+    /**
+     * @brief nextFrame is responsible for updating
+     * the balls on the screen.
+     */
     void nextFrame();
+
+    /**
+     * @brief nextAnim is responsible for updating the
+     * physics of the balls.
+     */
     void nextAnim();
 };
 

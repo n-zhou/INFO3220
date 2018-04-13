@@ -15,12 +15,15 @@ PoolBall::PoolBall(QString colour,
 
 }
 
+
 PoolBall::~PoolBall(){}
 
 void PoolBall::render(QPainter &painter, unsigned int time)
 {
     painter.setPen(Qt::black);
+    //brush set to the colour of the ball
     painter.setBrush(QBrush(m_colour.toStdString().c_str()));
+    //painter draws the ellipse
     painter.drawEllipse(m_position.toPointF(),
             m_radius,
             m_radius);

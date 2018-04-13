@@ -13,6 +13,11 @@ public:
 
     ~PoolTable();
 
+    /**
+     * @brief getColour is implemented in order to inherit
+     * from Table.
+     * @return a QString respresentaion of the table colour.
+     */
     QString getColour();
 };
 

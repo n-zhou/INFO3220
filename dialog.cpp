@@ -26,14 +26,23 @@ Dialog::Dialog(QWidget *parent) :
     timer2->start(32);
 }
 
+/**
+ * @brief Dialog::~Dialog
+ * frees memory allocated by the factory
+ */
 Dialog::~Dialog()
 {
+    delete m_table;
+    while(!m_balls.empty()){
+        delete m_balls.back();
+        m_balls.pop_back();
+    }
     delete ui;
 }
 
 void Dialog::init()
 {
-    QFile file("config.json");
+    QFile file(CONFIG_FILE);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QString val = file.readAll();
     file.close();
@@ -52,6 +61,11 @@ void Dialog::nextFrame()
     update();
 }
 
+/**
+ * @brief Dialog::paintEvent
+ * @param event
+ * This method handles the drawing of the balls
+ */
 void Dialog::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -60,6 +74,10 @@ void Dialog::paintEvent(QPaintEvent *event)
     }
 }
 
+/**
+ * @brief Dialog::nextAnim
+ * This method handles the physics of the ball
+ */
 void Dialog::nextAnim()
 {
     for(int i = 0; i < m_balls.size(); i++){
@@ -103,11 +121,22 @@ void Dialog::nextAnim()
 
 }
 
+/**
+*   This method will check if two balls collide.
+*   @param b1 The first ball we are checking
+*   @param b2 The second ball we are checking
+*   @return true if they are colliding, false otherwise
+*/
 bool Dialog::ballCollision(Ball *b1, Ball *b2)
 {
     return (b1->getPosition().distanceToPoint(b2->getPosition()) <= (b1->radius() + b2->radius()));
 }
 
+/**
+ * @brief Dialog::handleBallCollision will apply the change in velocity of 2 colliding balls
+ * @param b1
+ * @param b2
+ */
 void Dialog::handleBallCollision(Ball *b1, Ball *b2)
 {
     //QVector2D is a QT class representing a vector in 2D space,
@@ -163,22 +192,41 @@ void Dialog::handleBallCollision(Ball *b1, Ball *b2)
     b2->getVelocity().setY(b2->getVelocity().y() + deltaVB.y());
 }
 
-
+/**
+ * @brief Dialog::isTopCollision
+ * @param b
+ * @return true if b is hitting the top edge
+ */
 bool Dialog::isTopCollision(Ball *b)
 {
     return b->getPosition().y() < 0 + b->radius();
 }
 
+/**
+ * @brief Dialog::isBottomCollision
+ * @param b
+ * @return true if b is hitting the bottom edge
+ */
 bool Dialog::isBottomCollision(Ball *b)
 {
     return b->getPosition().y() > m_table->getHeight() - b->radius();
 }
 
+/**
+ * @brief Dialog::isLeftCollision
+ * @param b
+ * @return true if b is hitting the left edge
+ */
 bool Dialog::isLeftCollision(Ball *b)
 {
     return b->getPosition().x() < 0 + b->radius();
 }
 
+/**
+ * @brief Dialog::isRightCollision
+ * @param b
+ * @return true if b is hitting the right edge
+ */
 bool Dialog::isRightCollision(Ball *b)
 {
     return b->getPosition().x() > m_table->getWidth() - b->radius();

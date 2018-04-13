@@ -20,11 +20,35 @@ public:
         m_height(height),
         m_friction(friction){}
 
+    /**
+     * @brief ~Table has no memory to cleanup so the destructor
+     * should be empty.
+     */
     virtual ~Table(){}
 
+    /**
+     * @brief subclasses must implement this method in order to
+     * inherit from this class.
+     * @return a QString representation of colour
+     */
     virtual QString getColour() = 0;
+
+    /**
+     * @brief getWidth
+     * @return the width of the ball.
+     */
     virtual double getWidth(){return m_width;}
+
+    /**
+     * @brief getHeight
+     * @return the height of the ball.
+     */
     virtual double getHeight(){return m_height;}
+
+    /**
+     * @brief getFriction
+     * @return the friction of the table
+     */
     virtual double getFriction(){return m_friction;}
 
 protected:
