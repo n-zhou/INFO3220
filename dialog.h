@@ -6,9 +6,9 @@
 #include "table.h"
 #include <string>
 //#include "config.h"
+#include "game.h"
 #include "concretepoolfactory.h"
 #include <vector>
-#define CONFIG_FILE "../PoolGame/config.json"
 
 namespace Ui {
 class Dialog;
@@ -26,17 +26,14 @@ public:
 
 private:
     Ui::Dialog *ui;
-    void init();
+    Game game;
+
+    /**
+     * @brief paintEvent is called by the slot Dialog::nextFrame()
+     * to update the position of the balls on screen.
+     * @param event
+     */
     void paintEvent(QPaintEvent *event);
-    Table *m_table;
-    std::vector<Ball*> m_balls;
-    bool ballCollision(Ball *b1, Ball *b2);
-    void handleBallCollision(Ball *b1, Ball *b2);
-    bool isCollision(Ball *b);
-    bool isTopCollision(Ball *b);
-    bool isBottomCollision(Ball *b);
-    bool isLeftCollision(Ball *b);
-    bool isRightCollision(Ball *b);
 
 public slots:
     /**

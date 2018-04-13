@@ -20,9 +20,21 @@ public:
     * it must initialize the member variables table and balls accordingly
     */
     ConcretePoolFactory(QJsonObject json);
+
     ~ConcretePoolFactory();
 
+    /**
+     * @brief createTable implements a virtual method in
+     * AbstractPool
+     * @return
+     */
     Table* createTable();
+
+    /**
+     * @brief createBalls implements a virtual method in
+     * AbstractPool
+     * @return
+     */
     std::vector<Ball*> createBalls();
 
 private:
